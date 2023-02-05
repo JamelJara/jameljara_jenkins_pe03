@@ -2,7 +2,7 @@
 # inference.py
 # Jamel Jara 23/01/2023
 
-
+#change
 import platform; print(platform.platform())
 import sys; print("Python", sys.version)
 import numpy; print("NumPy", numpy.__version__)
