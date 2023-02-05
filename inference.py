@@ -55,6 +55,10 @@ def inference():
     print(clf_nn.score(X_test, y_test))
     print(clf_nn.predict(X_test))
     
-    
+#maybe add predict class/method here
+def predict():
+    print("PREDICTED RESULT WITH ACCURACY!!!")
+
 if __name__ == '__main__':
     inference()
+    predict()
