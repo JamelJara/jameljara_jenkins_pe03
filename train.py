@@ -45,5 +45,10 @@ def train():
     from joblib import dump
     dump(clf_NN, 'Inference_NN.joblib')
         
+#maybe add predict class/method here
+def predict():
+    print("PREDICTED RESULT WITH ACCURACY!!!")
+
 if __name__ == '__main__':
     train()
+    predict()
