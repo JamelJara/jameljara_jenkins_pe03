@@ -48,6 +48,10 @@ def train():
 #maybe add predict class/method here
 def predict():
     print("PREDICTED RESULT WITH ACCURACY!!!")
+    x = -1
+
+    if x < 0:
+        raise Exception("Intentional error: Accuracy below expected!!!")
 
 if __name__ == '__main__':
     train()
