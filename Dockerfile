@@ -1,17 +1,21 @@
-FROM python:3.9.16-bullseye
-COPY requirements.txt ./requirements.txt
-RUN pip install -r requirements.txt
-COPY flask_app.py ./flask_app.py
-RUN mkdir docker-ml-model
-ENV MODEL_DIR=docker-ml-model
-ENV MODEL_FILE_LDA=clf_lda.joblib
-ENV MODEL_FILE_NN=clf_nn.joblib
-RUN pip install joblib
-COPY train.csv ./train.csv
-COPY test.csv ./test.csv
-COPY train.py ./train.py
-COPY inference.py ./inference.py
-RUN python3 train.py
-# configure the container to run in an executed manner
-ENTRYPOINT [ "python" ]
-CMD ["flask_app.py" ]
+FROM jenkins/jenkins:latest
+ 
+USER root
+#referenced: https://docs.docker.com/engine/install/debian/ and matched up to Dockerfile format
+RUN apt-get update -qq \
+    && apt-get install -qqy  \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+WORKDIR /etc/apt/keyrings
+RUN curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+RUN echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
+  $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+RUN apt-get update  -qq \
+    && apt-get install docker-ce docker-ce-cli containerd.io -y
+ 
+RUN usermod -aG docker jenkins
